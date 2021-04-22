@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: rgb(240, 226, 245);
+        }
+
+        span {
+            color: rgb(248, 158, 158);
+        }
+
+        #main_container {
+            text-align: center;
+            margin: 15px 10px;
+            border: black solid 1px;
+
+            background-color: #f1f1f1;
+
+            background-color: rgb(219, 228, 246);
+        }
+
+        .note {
+            text-align: right;
+            padding-right: 100px;
+        }
+
+        form {
+            width: 90%;
+            margin: auto;
+            height: 90%;
+            border: 2px solid black;
+            background-color: rgb(253, 249, 249);
+
+        }
+
+        fieldset {
+            margin: 40px 20px;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-color: rgb(253, 249, 249);
+        }
+
+        legend {
+            font-size: 20px;
+        }
+
+        table {
+            width: 90%;
+            margin: auto;
+            border: 1px solid black;
+            border-radius: 5px;
+            background-color: rgb(219, 228, 246);
+        }
+
+
+        .field {
+            width: 50%;
+        }
+
+        .btn_box {
+            text-align: center;
+            margin: 20px 10px 10px 10px;
+            border: black solid 1px;
+
+            background-color: #f1f1f1;
+
+            background-color: rgb(219, 228, 246);
+        }
+
+        .button {
+            padding: 8px 10px;
+            border-radius: 5px;
+            border: 1px black;
+            background-color: rgb(75, 186, 238);
+            text-align: center;
+            font-size: 16px;
+            margin: 6px 2px;
+            opacity: 0.8;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 1
+        }
+
+        @media screen and (max-width: 600px) {
+            .field {
+                width: 70%;
+            }
+
+            .note {
+                text-align: right;
+                padding-right: 50px;
+            }
+        }
+    </style>
+
+    <script>
+        function validate() {
+            var correct_name_way = /^[A-Za-z]+$/;
+            // var mob_format = /^\d{10}$/;
+            var adhar_format = /^[2-9]{1}[0-9]{3}\s[0-9]{4}\s[0-9]{4}$/;
+            var Pan_format = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+
+            var Name = document.myform.fname.value;
+
+            // name validate
+            // if (Name == "") {
+            //     document.getElementById("name_validation").innerHTML = "please enter name";
+            //     return false;
+            // }
+            // else if (Name.length < 3) {
+            //     document.getElementById("name_validation").innerHTML = "name should atleast 3 char";
+            //     return false;
+            // }
+            // else if (Name.match(correct_name_way)) {
+            //     return false;
+            // }
+            // else{
+            //     document.getElementById("name_validation").innerHTML = "Only Alphabates are allowed";
+            //     return false;
+            // }
+            // age validate
+            
+            var age = document.myform.fage.value;
+            if (age == "") {
+                document.getElementById("age_validation").innerHTML = "please enter age";
+                return false;
+            }
+            else if (isNaN(age)) {
+                document.getElementById("age_validation").innerHTML = "value should be numeric";
+                return false;
+            } 
+
+            // email validat 
+            
+            var email = document.myform.femail.value;
+            atposition = email.indexOf("@");
+            dotposition = email.lastIndexOf(".");
+
+            if (email == "") {
+                document.getElementById("email_validation").innerHTML = "please enter email";
+                return false;
+            }
+            else if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length) {
+                document.getElementById("email_validation").innerHTML = "Enter a valid email ID";
+                return false;
+            } 
+
+            // mobile validate
+            var mob_no = document.myform.fmob.value;
+            if (isNaN(mob_no)) {
+                document.getElementById("mob_validation").innerHTML = "Enter Numeric value only";
+                return false;
+            }
+            else if (mob_no.length != 10) {
+                document.getElementById("mob_validation").innerHTML = "Mobile no must be 10 digit";
+                return false;
+            } 
+            if (mob_no.match(mob_format)) {
+                return false;
+            }
+            else if (mob_no.match(mob_format)){
+                document.getElementById("mob_validation").innerHTML = "Mobile no must be 10 digit";
+                return false;
+            }
+            
+            // document details validation
+
+            var adhar_format = /^[2-9]{1}[0-9]{3}\s[0-9]{4}\s[0-9]{4}$/;
+            var Pan_format = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+            var doc_type = document.myform.fdoc.value;
+            var doc_no = document.myform.fdoc_no.value;
+            if (doc_type == "Adhar Card") {
+                if (doc_no.length != 12) {
+                    document.getElementById("doc_no_validation").innerHTML = "Adhar no must be 12 digit";
+                    return false;
+                }
+
+                // else if(doc_no.match(adhar_format)){
+                //     document.getElementById("doc_no_validation").innerHTML = "Enter valid Adhar NO like 78XX 45XX 97XX";
+                //     return false;
+                // }
+            }
+            else if (doc_type == "PAN Card") {
+                if (doc_no.match(Pan_format)) {
+                    return false;
+                } else {
+                    document.getElementById("doc_no_validation").innerHTML = "Enter valid PAN no";
+                    return false;
+                }
+
+            }
+            return true
+        }
+
+    </script>
+
+
+
+</head>
+
+<body>
+    <div id="main_container">
+        <h1>!Registration form!</h1>
+    </div>
+    <div class="note">All fields marked by <span>*</span>are mandatory</div>
+    <form name="myform" action="" onsubmit="return validate()" class="form">
+        <fieldset>
+            <legend>User datils</legend>
+            <table>
+                <tr>
+                    <td>
+                        Name<span><sup>*</sup></span>
+                    </td>
+                    <td> <input type="text" class="field" id="name" name="fname" value="">
+                        <span id="name_validation"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date of Birth<span><sup>*</sup></span></td>
+                    <td> <input type="date" class="field" name="fDate" min="1995-01-01"></td>
+                </tr>
+
+                <tr>
+                    <td>Age<span><sup>*</sup></span></td>
+                    <td> <input type="text" name="fage" value="" class="field" id="name">
+                        <span id="age_validation"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>email id<span><sup>*</sup></span></td>
+                    <td> <input type="text" name="femail" value="" class="field" id="name">
+                        <span id="email_validation"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mobile No<span><sup>*</sup></span></td>
+                    <td> <input type="tel" name="fmob" class="field" id="name">
+                        <span id="mob_validation"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Type of Documents<span><sup>*</sup></span></td>
+                    <td>
+                        <select value="" name="fdoc" id="" class="field" required>
+                            <option>--Please Select--</option>
+                            <option>Adhar Card</option>
+                            <option>PAN Card</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Document no<span><sup>*</sup></span></td>
+                    <td> <input type="text" name="fdoc_no" class="field" id="name">
+                        <span id="doc_no_validation"></span>
+                    </td>
+                </tr>
+            </table>
+            <div class="btn_box">
+                <input type="button" value="Verify" class="button" id="Verify" required>
+
+
+
+                <input type="submit" value="Submit" class="button" id="submit" required>
+
+
+                <input type="button" value="Reset" class="button" id="Reset" required>
+            </div>
+        </fieldset>
+    </form>
+</body>
+
+</html>
