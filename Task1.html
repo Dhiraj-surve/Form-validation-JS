@@ -43,7 +43,7 @@
             margin: 40px 20px;
             border: 1px solid black;
             border-radius: 10px;
-            background-color: rgb(253, 249, 249);
+            background-color: rgb(240, 226, 245);
         }
 
         legend {
@@ -105,101 +105,99 @@
     <script>
         function validate() {
             var correct_name_way = /^[A-Za-z]+$/;
-            // var mob_format = /^\d{10}$/;
-            var adhar_format = /^[2-9]{1}[0-9]{3}\s[0-9]{4}\s[0-9]{4}$/;
-            var Pan_format = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-
-
             var Name = document.myform.fname.value;
-
+             var result=true;
+             console.log(Name)
             // name validate
-            // if (Name == "") {
-            //     document.getElementById("name_validation").innerHTML = "please enter name";
-            //     return false;
-            // }
-            // else if (Name.length < 3) {
-            //     document.getElementById("name_validation").innerHTML = "name should atleast 3 char";
-            //     return false;
-            // }
-            // else if (Name.match(correct_name_way)) {
-            //     return false;
-            // }
-            // else{
-            //     document.getElementById("name_validation").innerHTML = "Only Alphabates are allowed";
-            //     return false;
-            // }
+            if (Name == "") {
+                document.getElementById("name_validation").innerHTML = "please enter name";
+                result= false;
+            }
+            else if (Name.length < 3) {
+                document.getElementById("name_validation").innerHTML = "name should atleast 3 char";
+                result= false;
+            }
+            else if (Name.match(correct_name_way)) {
+                result= false;
+            }
+            else{
+                document.getElementById("name_validation").innerHTML = "Only Alphabates are allowed";
+                result= false;
+            }
+
+
             // age validate
-            
+
             var age = document.myform.fage.value;
             if (age == "") {
                 document.getElementById("age_validation").innerHTML = "please enter age";
-                return false;
+                age.focus;
+                result= false;
             }
             else if (isNaN(age)) {
                 document.getElementById("age_validation").innerHTML = "value should be numeric";
-                return false;
-            } 
+                result= false;
+            }
 
             // email validat 
-            
+
             var email = document.myform.femail.value;
             atposition = email.indexOf("@");
             dotposition = email.lastIndexOf(".");
 
             if (email == "") {
                 document.getElementById("email_validation").innerHTML = "please enter email";
-                return false;
+                email.focus;
+                result= false;
             }
             else if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= email.length) {
                 document.getElementById("email_validation").innerHTML = "Enter a valid email ID";
-                return false;
-            } 
+                result= false;
+            }
 
             // mobile validate
             var mob_no = document.myform.fmob.value;
             if (isNaN(mob_no)) {
                 document.getElementById("mob_validation").innerHTML = "Enter Numeric value only";
-                return false;
+                result= false;
             }
             else if (mob_no.length != 10) {
                 document.getElementById("mob_validation").innerHTML = "Mobile no must be 10 digit";
-                return false;
-            } 
-            if (mob_no.match(mob_format)) {
-                return false;
+                result= false;
             }
-            else if (mob_no.match(mob_format)){
-                document.getElementById("mob_validation").innerHTML = "Mobile no must be 10 digit";
-                return false;
-            }
-            
+
             // document details validation
 
             var adhar_format = /^[2-9]{1}[0-9]{3}\s[0-9]{4}\s[0-9]{4}$/;
             var Pan_format = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
             var doc_type = document.myform.fdoc.value;
             var doc_no = document.myform.fdoc_no.value;
-            if (doc_type == "Adhar Card") {
+
+            if (doc_type == "--Please Select--") {
+                document.getElementById("select").innerHTML = "select document type";
+                result= false;
+            }
+            else if (doc_type == "Adhar Card") {
                 if (doc_no.length != 12) {
                     document.getElementById("doc_no_validation").innerHTML = "Adhar no must be 12 digit";
-                    return false;
+                    result= false;
                 }
-
-                // else if(doc_no.match(adhar_format)){
-                //     document.getElementById("doc_no_validation").innerHTML = "Enter valid Adhar NO like 78XX 45XX 97XX";
-                //     return false;
-                // }
             }
             else if (doc_type == "PAN Card") {
                 if (doc_no.match(Pan_format)) {
-                    return false;
+                    result= false;
                 } else {
                     document.getElementById("doc_no_validation").innerHTML = "Enter valid PAN no";
-                    return false;
+                    result= false;
                 }
 
             }
-            return true
+            return result;
+        }
+
+        // on submit confirmation is required for that 
+        function confirmation() {
+            alert("Are You sure, wants  to submit!");
         }
 
     </script>
@@ -209,20 +207,24 @@
 </head>
 
 <body>
+    <!-- heading container -->
     <div id="main_container">
         <h1>!Registration form!</h1>
     </div>
+    <!-- note -->
     <div class="note">All fields marked by <span>*</span>are mandatory</div>
+    <!-- main form -->
     <form name="myform" action="" onsubmit="return validate()" class="form">
         <fieldset>
             <legend>User datils</legend>
+            <!-- use of table as its easy for resposive page and allignment -->
             <table>
                 <tr>
                     <td>
                         Name<span><sup>*</sup></span>
                     </td>
-                    <td> <input type="text" class="field" id="name" name="fname" value="">
-                        <span id="name_validation"></span>
+                    <td> <input type="text" class="field" id="name" name="fname" value=""></td>
+                    <td> <span id="name_validation"></span>
                     </td>
                 </tr>
                 <tr>
@@ -232,20 +234,20 @@
 
                 <tr>
                     <td>Age<span><sup>*</sup></span></td>
-                    <td> <input type="text" name="fage" value="" class="field" id="name">
-                        <span id="age_validation"></span>
+                    <td> <input type="text" name="fage" value="" class="field" id="name"></td>
+                    <td> <span id="age_validation"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>email id<span><sup>*</sup></span></td>
-                    <td> <input type="text" name="femail" value="" class="field" id="name">
-                        <span id="email_validation"></span>
+                    <td> <input type="text" name="femail" value="" class="field" id="name"></td>
+                    <td> <span id="email_validation"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>Mobile No<span><sup>*</sup></span></td>
-                    <td> <input type="tel" name="fmob" class="field" id="name">
-                        <span id="mob_validation"></span>
+                    <td> <input type="tel" name="fmob" class="field" id="name"></td>
+                    <td> <span id="mob_validation"></span>
                     </td>
                 </tr>
                 <tr>
@@ -255,25 +257,24 @@
                             <option>--Please Select--</option>
                             <option>Adhar Card</option>
                             <option>PAN Card</option>
-                        </select>
+                        </select></td>
+                        <td> <span id="select"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>Document no<span><sup>*</sup></span></td>
-                    <td> <input type="text" name="fdoc_no" class="field" id="name">
-                        <span id="doc_no_validation"></span>
+                    <td> <input type="text" name="fdoc_no" class="field" id="name"></td>
+                    <td> <span id="doc_no_validation"></span>
                     </td>
                 </tr>
             </table>
+            <!-- Verify/ Submit/ Reset button -->
             <div class="btn_box">
-                <input type="button" value="Verify" class="button" id="Verify" required>
+                <input type="button" value="Verify" onclick="return validate()" class="button" id="Verify" required>
 
+                <input type="submit" value="Submit" onclick="confirmation()" class="button" id="submit" required>
 
-
-                <input type="submit" value="Submit" class="button" id="submit" required>
-
-
-                <input type="button" value="Reset" class="button" id="Reset" required>
+                <input type="reset" value="Reset" class="button" id="Reset" required>
             </div>
         </fieldset>
     </form>
